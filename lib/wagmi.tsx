@@ -1,8 +1,8 @@
 "use client";
 
-import { WagmiConfig, createConfig } from "wagmi/react";
-import { http } from "viem";
+import { WagmiProvider, createConfig } from "wagmi";
 import { injected, walletConnect } from "wagmi/connectors";
+import { http } from "viem";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { tempoTestnet } from "./chain";
 
@@ -17,24 +17,19 @@ export const wagmiConfig = createConfig({
     injected(),
     walletConnect({ projectId }),
   ],
-  ssr: false, // 🔥 penting untuk Next 16
+  ssr: false,
 });
 
 createWeb3Modal({
   wagmiConfig,
   projectId,
-  chains: [tempoTestnet],
 });
 
-export function Web3Provider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function Web3Provider({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiConfig config={wagmiConfig}>
+    <WagmiProvider config={wagmiConfig}>
       {children}
-    </WagmiConfig>
+    </WagmiProvider>
   );
 }
 

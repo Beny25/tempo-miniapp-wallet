@@ -1,11 +1,11 @@
-import { Chain } from "viem";
+import { defineChain } from "viem";
 
-export const tempoTestnet: Chain = {
+export const tempoTestnet = defineChain({
   id: 42429,
   name: "Tempo Testnet",
   network: "tempo-testnet",
   nativeCurrency: {
-    name: "PathUSD",
+    name: "Path",
     symbol: "PATH",
     decimals: 18,
   },
@@ -16,9 +16,10 @@ export const tempoTestnet: Chain = {
   },
   blockExplorers: {
     default: {
-      name: "TempoScout",
+      name: "Tempo Scout",
       url: "https://scout.tempo.xyz",
     },
   },
   testnet: true,
-};
+});
+
