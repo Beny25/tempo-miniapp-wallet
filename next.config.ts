@@ -1,11 +1,8 @@
-import { NextConfig } from "next";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /close-on-gc\.js$/,
-      loader: "null-loader",
-    });
+  // Kosongkan eksperimen turbopack / webpack agar build lancar
+  webpack(config) {
     return config;
   },
 };
