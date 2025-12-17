@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Web3Provider } from "@/lib/wagmi";
+import { Providers } from "./providers";
 
 export default function RootLayout({
   children,
@@ -9,8 +9,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Web3Provider>{children}</Web3Provider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
 }
+
