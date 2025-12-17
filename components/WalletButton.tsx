@@ -1,31 +1,40 @@
 "use client";
 
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+import { w3mConnectors } from "@web3modal/wagmi/react";
+import { useState } from "react";
 
 export default function WalletButton() {
   const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: w3mConnectors({ version: 2 })[0], // web3modal connector
+  });
   const { disconnect } = useDisconnect();
 
-  if (!isConnected)
-    return (
-      <button
-        onClick={() => (window as any).Web3Modal.open()}
-        className="px-4 py-2 bg-black text-white rounded"
-      >
-        Connect Wallet
-      </button>
-    );
-
   return (
-    <div className="flex flex-col items-center gap-2">
-      <p className="text-sm">{address}</p>
-      <button
-        onClick={() => disconnect()}
-        className="px-4 py-2 bg-red-500 text-white rounded"
-      >
-        Disconnect
-      </button>
+    <div>
+      {!isConnected ? (
+        <button
+          onClick={() => connect()}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Connect Wallet
+        </button>
+      ) : (
+        <div className="flex items-center space-x-4">
+          <span className="px-3 py-1 bg-gray-200 rounded">
+            {address?.slice(0, 6)}…{address?.slice(-4)}
+          </span>
+          <button
+            onClick={() => disconnect()}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Disconnect
+          </button>
+        </div>
+      )}
     </div>
   );
 }
-
